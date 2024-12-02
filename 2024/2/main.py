@@ -1,3 +1,4 @@
+import itertools
 import sys
 
 def read_input(path: str) -> list[list[int]]:
@@ -9,25 +10,21 @@ def read_input(path: str) -> list[list[int]]:
         for it1 in levels
     ]
 
-def permutations(levels: list[int]):
-    for i in range(0, len(levels)):
-        yield [x for index, x in enumerate(levels) if index != i]
-
 def increasing(levels: list[int]):
-    for i in range(0, len(levels) - 1):
-        if levels[i] >= levels[i + 1]:
+    for a, b in itertools.pairwise(levels):
+        if a >= b:
             return False
     return True
 
 def decreasing(levels: list[int]):
-    for i in range(0, len(levels) - 1):
-        if levels[i] <= levels[i + 1]:
+    for a, b in itertools.pairwise(levels):
+        if a <= b:
             return False
     return True
 
 def difference(levels: list[int]):
-    for i in range(0, len(levels) - 1):
-        diff = abs(levels[i] - levels[i + 1])
+    for a, b in itertools.pairwise(levels):
+        diff = abs(a - b)
         if diff < 1 or diff > 3:
             return False
     return True
@@ -44,7 +41,7 @@ if __name__ == "__main__":
 
     num_safe = 0
     for levels in data:
-        for permutation in permutations(levels):
+        for permutation in itertools.combinations(levels, r=len(levels) - 1):
             if (increasing(permutation) or decreasing(permutation)) and difference(permutation):
                 num_safe += 1
                 break
