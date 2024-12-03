@@ -9,8 +9,8 @@ if __name__ == "__main__":
     regex = r"mul\((\d{1,3}),(\d{1,3})\)"
     result = 0
     for match in re.finditer(regex, data):
-        groups = match.groups()
-        result += int(groups[0]) * int(groups[1])
+        left, right = match.groups()
+        result += int(left) * int(right)
     assert result == 173785482
     print(f"Part A: {result}")
 
@@ -18,12 +18,12 @@ if __name__ == "__main__":
     result = 0
     enabled = True
     for match in re.finditer(regex, data):
-        groups = match.groups()
-        if enabled and groups[0]:
-            result += int(groups[0]) * int(groups[1])
-        if groups[2]:
+        left, right, do, dont = match.groups()
+        if enabled and left:
+            result += int(left) * int(right)
+        if do:
             enabled = True
-        if groups[3]:
+        if dont:
             enabled = False
     assert result == 83158140
     print(f"Part B: {result}")
