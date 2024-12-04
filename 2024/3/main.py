@@ -27,4 +27,3 @@ if __name__ == "__main__":
             enabled = False
     assert result == 83158140
     print(f"Part B: {result}")
-
