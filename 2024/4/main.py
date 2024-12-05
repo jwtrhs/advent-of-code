@@ -3,7 +3,7 @@ import sys
 
 def _has_xmas(
     data: list[list[str]],
-    points: list[tuple[int]],
+    points: list[tuple[int, int]],
 ):
     if any(x >= len(data[0]) or x < 0 or y >= len(data) or y < 0 for x, y in points):
         return 0
@@ -20,7 +20,7 @@ def _has_xmas(
     )
 
 
-def has_xmas(data: list[list[str]], x: int, y: int) -> bool:
+def has_xmas(data: list[list[str]], x: int, y: int) -> int:
     if data[y][x] != "X":
         return 0
 
@@ -116,7 +116,7 @@ def has_xmas(data: list[list[str]], x: int, y: int) -> bool:
     )
 
 
-def has_mas(data: list[list[int]], x: int, y: int):
+def has_mas(data: list[list[str]], x: int, y: int) -> int:
     if data[y][x] != "A":
         return 0
 
