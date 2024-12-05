@@ -39,7 +39,8 @@ if __name__ == "__main__":
                 potential_update = list(fixed_update)
                 potential_update.insert(index, u)
                 if _update_correct(potential_update, rules):
-                    new_update = potential_update
+                    fixed_update = potential_update
+                    break
         assert len(update) == len(fixed_update)
         assert _update_correct(fixed_update, rules)
         result += int(fixed_update[len(fixed_update) // 2])
