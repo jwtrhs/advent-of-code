@@ -33,15 +33,15 @@ if __name__ == "__main__":
         combinations = itertools.combinations(update, r=2)
         if _update_correct(update, rules):
             continue
-        new_update: list[str] = [update[0]]
+        fixed_update: list[str] = [update[0]]
         for u in update[1:]:
-            for index in range(0, len(new_update) + 1):
-                next_update = list(new_update)
-                next_update.insert(index, u)
-                if _update_correct(next_update, rules):
-                    new_update = next_update
-        assert len(update) == len(new_update)
-        assert _update_correct(new_update, rules)
-        result += int(new_update[len(new_update) // 2])
+            for index in range(0, len(fixed_update) + 1):
+                potential_update = list(fixed_update)
+                potential_update.insert(index, u)
+                if _update_correct(potential_update, rules):
+                    new_update = potential_update
+        assert len(update) == len(fixed_update)
+        assert _update_correct(fixed_update, rules)
+        result += int(fixed_update[len(fixed_update) // 2])
     assert result == 4743
     print(f"Part B: {result}")
