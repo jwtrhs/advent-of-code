@@ -1,12 +1,7 @@
 import itertools
 import sys
 
-Id = int
-Length = int
-Block = tuple[Id, Length]
-
-FREE_SPACE: Id = -1
-
+FREE_SPACE = -1
 
 def _read_disk_map():
     with open(sys.argv[1]) as f:
