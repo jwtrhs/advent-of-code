@@ -3,6 +3,7 @@ import sys
 
 FREE_SPACE = -1
 
+
 def _read_disk_map():
     with open(sys.argv[1]) as f:
         return f.readlines()[0].strip()
