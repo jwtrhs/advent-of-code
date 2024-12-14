@@ -80,7 +80,6 @@ def fences_are_next_to_each_other(fence1: Fence, fence2: Fence) -> bool:
     return False
 
 
-# print(fences)
 visited_: set[Fence] = set()
 sides: dict[Fence, set[Fence]] = collections.defaultdict(set)
 for point, fences_ in fences.items():
