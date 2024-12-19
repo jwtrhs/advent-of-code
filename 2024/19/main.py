@@ -8,16 +8,15 @@ with open(sys.argv[1]) as f:
 
 
 def can_be_made(design: str, patterns: list[str]) -> bool:
-    towels_to_check: list[str] = [""]
-    while towels_to_check:
-        towel = towels_to_check.pop()
-        assert design.startswith(towel)
+    towels: list[str] = [""]
+    while towels:
+        towel = towels.pop()
         if towel == design:
             return True
         next_towels = [
             towel + p for p in patterns if design[len(towel) :].startswith(p)
         ]
-        towels_to_check.extend(next_towels)
+        towels.extend(next_towels)
     return False
 
 
