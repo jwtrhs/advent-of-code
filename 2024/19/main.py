@@ -22,20 +22,20 @@ def can_be_made(design: str, patterns: list[str]) -> bool:
 
 
 def count(design: str, patterns: list[str]) -> int:
-    combinations: dict[str, int] = {"": 1}
-    while combinations:
-        towel, count = sorted(combinations.items(), key=lambda x: len(x[0]))[0]
+    towels: dict[str, int] = {"": 1}
+    while towels:
+        towel, count = sorted(towels.items(), key=lambda x: len(x[0]))[0]
         if towel == design:
             return count
         next_towels = [
             towel + p for p in patterns if design[len(towel) :].startswith(p)
         ]
         for next_towel in next_towels:
-            if next_towel in combinations:
-                combinations[next_towel] += count
+            if next_towel in towels:
+                towels[next_towel] += count
             else:
-                combinations[next_towel] = count
-        del combinations[towel]
+                towels[next_towel] = count
+        del towels[towel]
 
     return 0
 
