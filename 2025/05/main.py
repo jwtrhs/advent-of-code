@@ -1,55 +1,19 @@
 import sys
 
-grid = {
-    (x, y): c
-    for y, line in enumerate(open(sys.argv[1], "r").readlines())
-    for x, c in enumerate(line)
-    if line.strip()
-}
+
+def _parse_range(s: str) -> tuple[int, int]:
+    tok = s.split("-")
+    return (int(tok[0]), int(tok[1]))
 
 
-def _remove(grid: dict[tuple[int, int], str]) -> dict[tuple[int, int], str]:
-    new_grid: dict[tuple[int, int], str] = {}
-    for (x, y), c in grid.items():
-        if c != "@":
-            new_grid[(x, y)] = c
-            continue
-        neighbours: list[tuple[int, int]] = [
-            (x - 1, y - 1),
-            (x - 1, y),
-            (x - 1, y + 1),
-            (x, y - 1),
-            (x, y + 1),
-            (x + 1, y - 1),
-            (x + 1, y),
-            (x + 1, y + 1),
-        ]
-        num_adjacent = sum(
-            1 if grid.get((x_, y_)) == "@" else 0 for x_, y_ in neighbours
-        )
-        if num_adjacent < 4:
-            new_grid[(x, y)] = "x"
-        else:
-            new_grid[(x, y)] = "@"
+lines = open(sys.argv[1]).readlines()
+id_ranges = [_parse_range(it) for it in lines if "-" in it]
+available_ids = [int(it) for it in lines if it.strip().isdigit()]
 
-    return new_grid
+# Part 1
+fresh = 0
+for id in available_ids:
+    if any(id >= min_ and id <= max_ for min_, max_ in id_ranges):
+        fresh += 1
 
-
-def _remove_loop(grid: dict[tuple[int, int], str]):
-    grids = [grid]
-    next_grid = None
-    while True:
-        next_grid = _remove(grids[-1])
-        if next_grid == grids[-1]:
-            break
-        else:
-            grids.append(next_grid)
-    return grids[-1]
-
-
-def _count_removed(grid: dict[tuple[int, int], str]) -> int:
-    return sum(c == "x" for c in grid.values())
-
-
-print(f"Part 1: {_count_removed(_remove(grid))}")
-print(f"Part 2: {_count_removed(_remove_loop(grid))}")
+print(f"Part 1: {fresh}")
