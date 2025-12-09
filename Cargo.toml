@@ -1,0 +1,18 @@
+[package]
+name = "advent-of-code"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[[bin]]
+name = "2025-01"
+path = "2025/01/main.rs"
+
+[[bin]]
+name = "2025-02"
+path = "2025/02/main.rs"
+
+[[bin]]
+name = "2025-09"
+path = "2025/09/main.rs"
