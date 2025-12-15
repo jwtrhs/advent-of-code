@@ -2,6 +2,7 @@ use std::env;
 use std::fmt;
 use std::fs;
 
+#[derive(PartialEq)]
 struct Shape {
     index: u32,
     shape: Vec<Vec<char>>,
@@ -20,6 +21,60 @@ impl Shape {
         let shape: Vec<Vec<char>> = iter.map(|x| x.chars().collect()).collect();
 
         Shape { index, shape }
+    }
+
+    fn width(&self) -> usize {
+        self.shape.first().unwrap_or(&vec![]).len()
+    }
+
+    fn height(&self) -> usize {
+        self.shape.len()
+    }
+
+    fn size(&self) -> u32 {
+        self.shape.iter().map(|x| x.len() as u32).sum()
+    }
+
+    fn get(&self, x: usize, y: usize) -> Option<char> {
+        let row = self.shape.get(y)?;
+        let char = row.get(x)?;
+        Some(*char)
+    }
+
+    fn flip(&self) -> Shape {
+        Shape {
+            index: self.index,
+            shape: self
+                .shape
+                .clone()
+                .iter()
+                .map(|x| {
+                    let mut x_ = x.clone();
+                    x_.reverse();
+                    x_
+                })
+                .collect::<Vec<Vec<char>>>(),
+        }
+    }
+
+    fn transpose(&self) -> Shape {
+        let mut transposed_shape: Vec<Vec<char>> = vec![vec!['.'; self.height()]; self.width()];
+        for (y, row) in self.shape.iter().enumerate() {
+            for (x, char) in row.iter().enumerate() {
+                transposed_shape[x][y] = *char;
+            }
+        }
+        Shape {
+            index: self.index,
+            shape: transposed_shape,
+        }
+    }
+
+    /// Rotate the shape by 90 degrees clockwise.
+    fn rotate(&self) -> Shape {
+        let mut transpose = self.transpose();
+        transpose.shape.reverse();
+        transpose
     }
 }
 
@@ -62,6 +117,10 @@ impl Grid {
             height,
             quantities,
         }
+    }
+
+    fn size(&self) -> u32 {
+        self.width * self.height
     }
 }
 
